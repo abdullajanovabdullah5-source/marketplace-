@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
+import { isFirebaseReady } from '../firebase';
 import { ShoppingBag, ShoppingCart, LogOut, LayoutDashboard, ClipboardList } from 'lucide-react';
 
 const Navbar = () => {
@@ -22,10 +23,34 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="nav-logo">
-          <ShoppingBag size={24} color="var(--primary)" />
-          <span>Sulhak</span>
-        </Link>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <Link to="/" className="nav-logo">
+            <ShoppingBag size={24} color="var(--primary)" />
+            <span>Sulhak</span>
+          </Link>
+          <span style={{
+            fontSize: '0.7rem',
+            padding: '3px 8px',
+            borderRadius: '50px',
+            background: isFirebaseReady ? 'rgba(16, 185, 129, 0.12)' : 'rgba(245, 158, 11, 0.12)',
+            color: isFirebaseReady ? '#34D399' : '#FBBF24',
+            border: isFirebaseReady ? '1px solid rgba(16, 185, 129, 0.25)' : '1px solid rgba(245, 158, 11, 0.25)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '5px',
+            fontWeight: '700',
+            letterSpacing: '0.02em',
+            textTransform: 'uppercase'
+          }}>
+            <span style={{
+              width: '6px',
+              height: '6px',
+              borderRadius: '50%',
+              background: isFirebaseReady ? '#10B981' : '#F59E0B'
+            }}></span>
+            {isFirebaseReady ? 'Firebase' : 'Local DB'}
+          </span>
+        </div>
 
         <div className="nav-menu">
           <Link to="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>

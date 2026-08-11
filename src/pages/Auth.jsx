@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { isFirebaseReady } from '../firebase';
 import { Mail, Lock, UserPlus, LogIn, AlertCircle } from 'lucide-react';
 
 const Auth = () => {
@@ -159,12 +160,22 @@ const Auth = () => {
         </form>
 
         <div style={{ marginTop: '24px', textAlign: 'center' }}>
-          <p style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
-            Для тестирования вы можете войти под демо-аккаунтами:<br />
-            <strong>seller@sulhak.com</strong> (Продавец)<br />
-            <strong>admin@sulhak.com</strong> (Админ)<br />
-            Пароль по умолчанию: <strong>password</strong>
-          </p>
+          {isFirebaseReady ? (
+            <p style={{ fontSize: '0.75rem', color: '#34D399', background: 'rgba(16, 185, 129, 0.08)', padding: '10px', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(16, 185, 129, 0.2)' }}>
+              <strong>Firebase подключен!</strong> Вы можете зарегистрировать новый аккаунт с реальной базой данных или использовать существующие демо-аккаунты (если они созданы в вашей БД Firestore).
+            </p>
+          ) : (
+            <div style={{ background: 'rgba(245, 158, 11, 0.08)', padding: '12px', borderRadius: 'var(--radius-sm)', border: '1px solid rgba(245, 158, 11, 0.2)' }}>
+              <p style={{ fontSize: '0.75rem', color: '#FBBF24', marginBottom: '8px', fontWeight: '600' }}>
+                Firebase не настроен (Локальный демо-режим)
+              </p>
+              <p style={{ fontSize: '0.75rem', color: 'var(--text-dim)' }}>
+                Используйте демо-аккаунты для входа:<br />
+                <strong>seller@sulhak.com</strong> (Продавец) / <strong>admin@sulhak.com</strong> (Админ)<br />
+                Пароль: <strong>password</strong>
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </div>

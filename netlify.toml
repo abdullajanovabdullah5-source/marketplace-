@@ -2,6 +2,10 @@
   publish = "dist"
   functions = "netlify/functions"
 
+[dev]
+  command = "npm run dev"
+  targetPort = 3000
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
@@ -11,3 +15,4 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
